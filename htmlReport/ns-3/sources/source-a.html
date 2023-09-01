@@ -1,0 +1,325 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > InventoryServiceTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.increff.pos.service</a>
+</div>
+
+<h1>Coverage Summary for Class: InventoryServiceTest (com.increff.pos.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InventoryServiceTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.4%
+  </span>
+  <span class="absValue">
+    (121/131)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">InventoryServiceTest$$EnhancerBySpringCGLIB$$32f83a1d</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.4%
+  </span>
+  <span class="absValue">
+    (121/131)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.increff.pos.service;
+&nbsp;
+&nbsp;import com.increff.pos.pojo.InventoryPojo;
+&nbsp;import com.increff.pos.pojo.ProductPojo;
+&nbsp;import junit.framework.TestCase;
+&nbsp;import org.junit.Test;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import static org.junit.Assert.assertEquals;
+&nbsp;import static org.junit.Assert.fail;
+&nbsp;
+<b class="fc">&nbsp;public class InventoryServiceTest extends AbstractUnitTest {</b>
+&nbsp;
+&nbsp;	@Autowired
+&nbsp;	private InventoryService service;
+&nbsp;	@Autowired
+&nbsp;	private ProductService productService;
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testAdd() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+<b class="fc">&nbsp;		Integer expectedInventory= 10;</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo r= service.get(p.getId());</b>
+<b class="fc">&nbsp;		assertEquals(expectedInventory,q.getQuantity());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testQuantityInvalidAdd() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(-1);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			service.add(q);</b>
+<b class="nc">&nbsp;			fail(&quot;Expected ApiException was not thrown&quot;);</b>
+<b class="fc">&nbsp;		} catch (ApiException e) {</b>
+<b class="fc">&nbsp;			TestCase.assertEquals( &quot;Quantity can not be negative&quot;, e.getMessage());</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testGetAll() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+<b class="fc">&nbsp;		ProductPojo p1=new ProductPojo();</b>
+<b class="fc">&nbsp;		p1.setBarcode(&quot;ndejfadsfsa&quot;);</b>
+<b class="fc">&nbsp;		p1.setBrand_category(12);</b>
+<b class="fc">&nbsp;		p1.setMrp(10.72);</b>
+<b class="fc">&nbsp;		p1.setName(&quot;Fanta 22200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p1);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q1=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q1.setQuantity(190);</b>
+<b class="fc">&nbsp;		q1.setId(p1.getId());</b>
+<b class="fc">&nbsp;		service.add(q1);</b>
+&nbsp;
+<b class="fc">&nbsp;		List&lt;InventoryPojo&gt;	l= service.getAll();</b>
+<b class="fc">&nbsp;		assertEquals(2,l.size());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testUpdate() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q1= service.get(p.getId());</b>
+<b class="fc">&nbsp;		q1.setQuantity(120);</b>
+<b class="fc">&nbsp;		service.update(p.getId(),120);</b>
+<b class="fc">&nbsp;		Integer expectedInventory= 120;</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo r= service.get(p.getId());</b>
+<b class="fc">&nbsp;		assertEquals(expectedInventory,r.getQuantity());</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testUpdateQuantity() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+&nbsp;		try {
+<b class="fc">&nbsp;			service.update(p.getId(),-1);</b>
+<b class="nc">&nbsp;			fail(&quot;Expected ApiException was not thrown&quot;);</b>
+<b class="fc">&nbsp;		} catch (ApiException e) {</b>
+<b class="fc">&nbsp;			TestCase.assertEquals( &quot;Quantity cannot be negative&quot;, e.getMessage());</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testCheckQuantity() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+<b class="fc">&nbsp;		Integer quantity=8;</b>
+<b class="fc">&nbsp;		Integer quantity1= service.checkQuantity(quantity,p.getId());</b>
+&nbsp;
+<b class="fc">&nbsp;		assertEquals(quantity1,quantity);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testCheckQuantityNegative() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+<b class="fc">&nbsp;		Integer quantity=-1;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			service.checkQuantity(quantity,p.getId());</b>
+<b class="nc">&nbsp;			fail(&quot;Expected ApiException was not thrown&quot;);</b>
+<b class="fc">&nbsp;		} catch (ApiException e) {</b>
+<b class="fc">&nbsp;			TestCase.assertEquals( &quot;Quantity should be positive&quot;, e.getMessage());</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testCheckQuantityLess() throws ApiException{
+<b class="fc">&nbsp;		ProductPojo p=new ProductPojo();</b>
+<b class="fc">&nbsp;		p.setBarcode(&quot;ndejf&quot;);</b>
+<b class="fc">&nbsp;		p.setBrand_category(1);</b>
+<b class="fc">&nbsp;		p.setMrp(10.7);</b>
+<b class="fc">&nbsp;		p.setName(&quot;Fanta 200 ml&quot;);</b>
+<b class="fc">&nbsp;		productService.add(p);</b>
+&nbsp;
+<b class="fc">&nbsp;		InventoryPojo q=new InventoryPojo();</b>
+<b class="fc">&nbsp;		q.setQuantity(10);</b>
+<b class="fc">&nbsp;		q.setId(p.getId());</b>
+<b class="fc">&nbsp;		service.add(q);</b>
+&nbsp;
+<b class="fc">&nbsp;		Integer quantity=11;</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			service.checkQuantity(quantity,p.getId());</b>
+<b class="nc">&nbsp;			fail(&quot;Expected ApiException was not thrown&quot;);</b>
+<b class="fc">&nbsp;		} catch (ApiException e) {</b>
+<b class="fc">&nbsp;			TestCase.assertEquals( &quot;Selected quantity:11 is more than inventory: 10 for barcode:ndejf&quot;, e.getMessage());</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testGetCheckInvalid() throws ApiException{
+&nbsp;		try {
+<b class="fc">&nbsp;			service.getCheck(-1);</b>
+<b class="nc">&nbsp;			fail(&quot;Expected ApiException was not thrown&quot;);</b>
+<b class="fc">&nbsp;		} catch (ApiException e) {</b>
+<b class="fc">&nbsp;			TestCase.assertEquals( &quot;Inventory with given ID does not exit, id: -1&quot;, e.getMessage());</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-02 20:27</div>
+</div>
+</body>
+</html>
